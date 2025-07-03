@@ -1,373 +1,59 @@
 "use client";
 
-import { useState } from "react";
-import { MapContainer, TileLayer, useMapEvent, Polygon } from "react-leaflet";
+import { useState, useEffect, use } from "react";
+import { MapContainer, TileLayer, Polygon } from "react-leaflet";
 import Image from "next/image";
 
 import './OpenStreetMap.css';
 import CloseIcon from './img/close-icon.png';
-
-const talhao1 = [
-  [
-    -47.73307465195106,
-    -22.75364851954876
-  ],
-  [
-    -47.733133631075845,
-    -22.753955572140384
-  ],
-  [
-    -47.73327433189553,
-    -22.754227430428486
-  ],
-  [
-    -47.73350883326097,
-    -22.75449928817551
-  ],
-  [
-    -47.73374333462692,
-    -22.754690823990884
-  ],
-  [
-    -47.73395103583627,
-    -22.755030644937662
-  ],
-  [
-    -47.73395773587558,
-    -22.755222180008005
-  ],
-  [
-    -47.733810335017154,
-    -22.755463143101082
-  ],
-  [
-    -47.73356243357313,
-    -22.75584621176027
-  ],
-  [
-    -47.733287731973576,
-    -22.756297242835927
-  ],
-  [
-    -47.73305323060765,
-    -22.756643238268254
-  ],
-  [
-    -47.73287232955437,
-    -22.75693362661562
-  ],
-  [
-    -47.73269812853985,
-    -22.75703866054637
-  ],
-  [
-    -47.732209025691134,
-    -22.756958340489035
-  ],
-  [
-    -47.73165962249146,
-    -22.756686487635932
-  ],
-  [
-    -47.73135142069657,
-    -22.756519668571627
-  ],
-  [
-    -47.73141172104803,
-    -22.756346670808483
-  ],
-  [
-    -47.731250920111535,
-    -22.756031567176734
-  ],
-  [
-    -47.730584415251,
-    -22.756172937538537
-  ],
-  [
-    -47.730028504592894,
-    -22.7561374936474
-  ],
-  [
-    -47.73007645684942,
-    -22.755989324380607
-  ],
-  [
-    -47.73016411203071,
-    -22.75568310802882
-  ],
-  [
-    -47.73044280948332,
-    -22.75494014991679
-  ],
-  [
-    -47.73059463066858,
-    -22.754804576020646
-  ],
-  [
-    -47.73144816765358,
-    -22.75438731282027
-  ],
-  [
-    -47.73212092870915,
-    -22.75407674598678
-  ],
-  [
-    -47.73283044998027,
-    -22.753719573417186
-  ],
-  [
-    -47.7330422818531,
-    -22.753631664946113
-  ]
-]
-
-const talhao2 = [
-  [
-    -47.73135059117385,
-    -22.7575810453513
-  ],
-  [
-    -47.731548156480756,
-    -22.757176564735445
-  ],
-  [
-    -47.73172094208377,
-    -22.75691473951271
-  ],
-  [
-    -47.73196072612231,
-    -22.756978563518032
-  ],
-  [
-    -47.73224362782838,
-    -22.757118790853852
-  ],
-  [
-    -47.732481848325506,
-    -22.757360629749712
-  ],
-  [
-    -47.73261013212101,
-    -22.757634786749605
-  ],
-  [
-    -47.73267906347769,
-    -22.757807568008246
-  ],
-  [
-    -47.732707767066586,
-    -22.75805046858993
-  ],
-  [
-    -47.73273441374599,
-    -22.758289228276
-  ],
-  [
-    -47.73274309080756,
-    -22.75836596108492
-  ],
-  [
-    -47.73254846619341,
-    -22.75845905008819
-  ],
-  [
-    -47.732177214697714,
-    -22.758235098163283
-  ],
-  [
-    -47.73163628387968,
-    -22.757855453046986
-  ],
-  [
-    -47.731353750010925,
-    -22.75764200983157
-  ],
-  [
-    -47.73134858938474,
-    -22.757577947677333
-  ]
-]
-
-const talhao3 = [
-  [
-    -47.74231352596979,
-    -22.752976404743748
-  ],
-  [
-    -47.7464572826531,
-    -22.755169133638574
-  ],
-  [
-    -47.74617495290494,
-    -22.7555991149288
-  ],
-  [
-    -47.74647439993615,
-    -22.756146584161755
-  ],
-  [
-    -47.74559683490588,
-    -22.756982909065215
-  ],
-  [
-    -47.745272834328176,
-    -22.756874037201214
-  ],
-  [
-    -47.74508521364561,
-    -22.75691940826404
-  ],
-  [
-    -47.74485947590057,
-    -22.756819577240094
-  ],
-  [
-    -47.74484153892308,
-    -22.756610665490214
-  ],
-  [
-    -47.744724778239885,
-    -22.756419713926505
-  ],
-  [
-    -47.743809715785346,
-    -22.75600075025325
-  ],
-  [
-    -47.74169621952905,
-    -22.75305052990042
-  ],
-  [
-    -47.742313495420035,
-    -22.752994938788675
-  ]
-]
-
-const talhao4 = [
-  [
-    -47.76295669089535,
-    -22.76647805942973
-  ],
-  [
-    -47.762816907010546,
-    -22.764985165738523
-  ],
-  [
-    -47.762668342368414,
-    -22.76479595594442
-  ],
-  [
-    -47.76139507563795,
-    -22.764813161048778
-  ],
-  [
-    -47.761319214920434,
-    -22.76503675071983
-  ],
-  [
-    -47.76119403241307,
-    -22.76549314465852
-  ],
-  [
-    -47.76140294593242,
-    -22.766021157540166
-  ],
-  [
-    -47.76162049045732,
-    -22.766167837081852
-  ],
-  [
-    -47.76181680124907,
-    -22.766187826649414
-  ],
-  [
-    -47.762057168661045,
-    -22.76614784459059
-  ],
-  [
-    -47.762349384053806,
-    -22.766007815231234
-  ],
-  [
-    -47.762494504531276,
-    -22.766061176660415
-  ],
-  [
-    -47.76270826849503,
-    -22.76653384856722
-  ],
-  [
-    -47.762823713688704,
-    -22.76661357540631
-  ],
-  [
-    -47.76294782900126,
-    -22.766553784643904
-  ],
-  [
-    -47.762941475837636,
-    -22.766467373943044
-  ]
-]
-const leafletCoords1 = talhao1.map(([lng, lat]) => [lat, lng]) as [number, number][];
-const leafletCoords2 = talhao2.map(([lng, lat]) => [lat, lng]) as [number, number][];
-const leafletCoords3 = talhao3.map(([lng, lat]) => [lat, lng]) as [number, number][];
-const leafletCoords4 = talhao4.map(([lng, lat]) => [lat, lng]) as [number, number][];
+import { GetCoords } from "@/app/actions/getCoords";
 
 export default function OpenStreetMap() {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [data, setData] = useState<[number, number][][]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      let coords = await GetCoords();
+      const formattedCoords = coords.map((item) => item.coords.map(([lng, lat]: [number, number]) => [lat, lng]) as [number, number][]);
+      setData(formattedCoords);
+
+      console.log(data);
+    }
+
+    fetchData();
+  }, []);
+
+
   return (
-    <div className="w-full h-full relative">
+    <div className="w-8/12 h-8/12  rounded-lg relative">
       <MapContainer
         center={[-22.75734177542188, -47.74038494935669]}
         zoom={16}
-        style={{ width: "100%", height: "100%" }}
+        className="w-full h-full rounded-lg"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-
-        <Polygon
-          positions={leafletCoords1}
-          pathOptions={{ color: "green", weight: 2 }}
+        {data.map((coords, index) => (
+          <Polygon
+          key={index}
+          positions={coords}
+          color="green"
           eventHandlers={{
-            click: () => setModalOpen((prevState) => !prevState),
+          click: () => setModalOpen((prevState) => !prevState),
           }}
-        />
-
-        <Polygon
-          positions={leafletCoords2}
-          pathOptions={{ color: "green", weight: 2 }}
-          eventHandlers={{
-            click: () => setModalOpen((prevState) => !prevState),
-          }}
-        />
-
-        <Polygon
-          positions={leafletCoords3}
-          pathOptions={{ color: "green", weight: 2 }}
-          eventHandlers={{
-            click: () => setModalOpen((prevState) => !prevState),
-          }}
-        />
-
-        <Polygon
-          positions={leafletCoords4}
-          pathOptions={{ color: "green", weight: 2 }}
-          eventHandlers={{
-            click: () => setModalOpen((prevState) => !prevState),
-          }}
-        />
+           />
+        ))}
 
         {modalOpen && (
-          <div className={`w-[800px] h-[400px] bg-red-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all ${modalOpen ? 'fade-in-scale' : ''} z-[99999]`}>
+          <div className={`w-[600px] h-[400px] bg-[#121212] rounded-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all ${modalOpen ? 'open' : ''} z-[99999]`}>
             <div className="w-full p-1 relative">
               <Image
                 onClick={() => setModalOpen((prevState) => !prevState)}
-                className="absolute top-2 right-2 cursor-pointer"
+                className="absolute top-3 right-3 cursor-pointer"
                 src={CloseIcon}
                 alt="ícone de fechar"
                 width={30} />

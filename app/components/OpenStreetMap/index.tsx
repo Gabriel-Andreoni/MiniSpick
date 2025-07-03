@@ -26,7 +26,7 @@ export default function OpenStreetMap() {
 
 
   return (
-    <div className="w-8/12 h-8/12  rounded-lg relative">
+    <div className="w-8/12 h-8/12  rounded-lg relative shadow-lg shadow-white/4">
       <MapContainer
         center={[-22.75734177542188, -47.74038494935669]}
         zoom={16}

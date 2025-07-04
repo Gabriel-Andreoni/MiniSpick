@@ -2,11 +2,10 @@
 
 import { useState, useEffect, use } from "react";
 import { MapContainer, TileLayer, Polygon } from "react-leaflet";
-import Image from "next/image";
 
-import './OpenStreetMap.css';
-import CloseIcon from './img/close-icon.png';
+
 import { GetCoords } from "@/app/actions/getCoords";
+import { FichasList } from "../FichasList";
 
 export default function OpenStreetMap() {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -48,18 +47,7 @@ export default function OpenStreetMap() {
            />
         ))}
 
-        {modalOpen && (
-          <div className={`w-[600px] h-[400px] bg-[#121212] rounded-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all ${modalOpen ? 'open' : ''} z-[99999]`}>
-            <div className="w-full p-1 relative">
-              <Image
-                onClick={() => setModalOpen((prevState) => !prevState)}
-                className="absolute top-3 right-3 cursor-pointer"
-                src={CloseIcon}
-                alt="ícone de fechar"
-                width={30} />
-            </div>
-          </div>
-        )}
+        {modalOpen && <FichasList modalOpen={modalOpen} setModalOpen={setModalOpen} />}
       </MapContainer>
     </div>
   );

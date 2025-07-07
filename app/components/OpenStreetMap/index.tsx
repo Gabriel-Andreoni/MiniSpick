@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Polygon } from "react-leaflet";
 
 
@@ -10,14 +10,13 @@ import { FichasList } from "../FichasList";
 export default function OpenStreetMap() {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [data, setData] = useState<[number, number][][]>([]);
+  const [coordID, setCoordID] = useState<undefined | number>(undefined)
 
   useEffect(() => {
     async function fetchData() {
       let coords = await GetCoords();
       const formattedCoords = coords.map((item) => item.coords.map(([lng, lat]: [number, number]) => [lat, lng]) as [number, number][]);
       setData(formattedCoords);
-
-      console.log(data);
     }
 
     fetchData();
@@ -31,10 +30,7 @@ export default function OpenStreetMap() {
         zoom={16}
         className="w-full h-full rounded-lg"
       >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
 
         {data.map((coords, index) => (
           <Polygon
@@ -42,12 +38,21 @@ export default function OpenStreetMap() {
           positions={coords}
           color="green"
           eventHandlers={{
-          click: () => setModalOpen((prevState) => !prevState),
+          click: () => {
+            setModalOpen((prevState) => !prevState);
+            setCoordID(index);
+          },
           }}
            />
         ))}
 
-        {modalOpen && <FichasList modalOpen={modalOpen} setModalOpen={setModalOpen} />}
+        {modalOpen && (
+          <FichasList
+          modalOpen={modalOpen}
+          setModalOpen={setModalOpen}
+          coordID={coordID}
+           />
+        )}
       </MapContainer>
     </div>
   );

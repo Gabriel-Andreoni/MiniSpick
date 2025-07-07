@@ -9,6 +9,7 @@ export async function CreateFicha(formData: FormData) {
     const qualidade_solo = formData.get('qualidade-solo')
     const avaliador = formData.get("avaliador")
     const turno = formData.get("turno")
+    const coords_id = formData.get("coord_id")
 
 
     if(typeof metros_colhidos !== 'string') {
@@ -25,6 +26,7 @@ export async function CreateFicha(formData: FormData) {
             qualidade_solo: qualidade_solo,
             avaliador: avaliador,
             turno: turno,
+            coords_id: coords_id,
         }
     ])
     .select()

@@ -7,9 +7,10 @@ import { Select } from "../Select";
 
 type FichaProps = {
   setFichaOpen: Dispatch<SetStateAction<boolean>>;
+  coordID: undefined | number;
 };
 
-export function Ficha({ setFichaOpen }: FichaProps) {
+export function Ficha({ setFichaOpen, coordID }: FichaProps) {
   return (
     <div className="w-[700px] h-[600px] bg-[#121212] flex flex-col justify-center items-center rounded-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-lg shadow-white/10">
       <Image
@@ -23,6 +24,7 @@ export function Ficha({ setFichaOpen }: FichaProps) {
       <form
         className="w-9/12 h-auto flex flex-wrap justify-center items-center gap-2 p-4 bg-white/10 rounded-lg"
         action={async (formData: FormData) => {
+          formData.append("coord_id", JSON.stringify(coordID));
           await CreateFicha(formData);
         }}
       >

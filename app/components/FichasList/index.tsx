@@ -10,15 +10,15 @@ import { Ficha } from "../Ficha";
 type FichaListProps = {
   modalOpen: boolean;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
+  coordID: undefined | number;
 };
 
-export function FichasList({ modalOpen, setModalOpen }: FichaListProps) {
+export function FichasList({ modalOpen, setModalOpen, coordID }: FichaListProps) {
   const [fichaOpen, setFichaOpen] = useState<boolean>(false);
   return (
     <div
-      className={`w-[700px] h-[400px] bg-[#121212] rounded-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all ${
-        modalOpen ? "open" : ""
-      } z-[99999] relative`}
+      className={`w-[700px] h-[400px] bg-[#121212] rounded-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all ${modalOpen ? "open" : ""
+        } z-[99999] relative`}
     >
       <div className="w-full h-full p-4 flex justify-start relative">
         <Image
@@ -45,7 +45,13 @@ export function FichasList({ modalOpen, setModalOpen }: FichaListProps) {
         </div>
       </div>
 
-      {fichaOpen && <Ficha setFichaOpen={setFichaOpen} />}
+      {fichaOpen && (
+        <Ficha
+          setFichaOpen={setFichaOpen}
+          coordID={coordID}
+        />
+      )
+      }
     </div>
   );
 }

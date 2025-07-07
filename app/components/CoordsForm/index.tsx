@@ -2,7 +2,7 @@ import { createCoords } from "@/app/actions/createCoords";
 
 export function CoordsForm() {
     return (
-        <div className="w-1/5 h-8/12 bg-[#171717] rounded-lg shadow-lg shadow-white/4">
+        <div className="w-1/5 h-11/12 bg-[#171717] rounded-lg shadow-lg shadow-white/4">
             <form
             action={async (formData:FormData) => {
                 "use server";

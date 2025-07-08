@@ -1,11 +1,11 @@
-import { CoordsForm } from "./components/CoordsForm";
+
 import MapClientWrapper from "./components/MapClientWrapper";
-import { Statistics } from "./components/Statistics";
+import { Menu } from "./components/Menu";
+
 
 export default function Home() {
-  return <div className="w-full h-screen p-8 flex justify-center items-center gap-2">
-    <Statistics />
+  return <div className="w-full h-screen p-2 flex justify-center items-center gap-2 relative overflow-hidden">
     <MapClientWrapper />
-    <CoordsForm />
+    <Menu />
   </div>;
 }

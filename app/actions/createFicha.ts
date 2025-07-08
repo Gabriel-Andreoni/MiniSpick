@@ -11,6 +11,8 @@ export async function CreateFicha(formData: FormData) {
     const turno = formData.get("turno")
     const coords_id = formData.get("coord_id")
 
+    console.log(coords_id);
+    
 
     if(typeof metros_colhidos !== 'string') {
         throw new Error("Campo não pode ser vazio")

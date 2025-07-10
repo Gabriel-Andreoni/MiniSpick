@@ -3,7 +3,6 @@ import Image from "next/image";
 import CloseIcon from "./img/close-icon.png";
 import { Dispatch, SetStateAction } from "react";
 import { FichaForm } from "../FichaForm";
-import { Statistics } from "../Statistics";
 
 type FichaProps = {
   setFichaOpen: Dispatch<SetStateAction<boolean>>;
@@ -22,7 +21,6 @@ export function Ficha({ setFichaOpen, coordID }: FichaProps) {
       />
 
       <FichaForm coordID={coordID} />
-      <Statistics />
     </div>
   );
 }

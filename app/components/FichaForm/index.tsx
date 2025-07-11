@@ -2,25 +2,27 @@ import { CreateFicha } from "@/app/actions/createFicha";
 import { Select } from "../Select";
 import { Statistics } from "../Statistics";
 import { useState } from "react";
+import { useFicha } from "@/app/context/FichaContext";
 
-type FichaProps = {
-  coordID: undefined | number;
-};
-
-export function FichaForm({ coordID }: FichaProps) {
+export function FichaForm() {
     const [canasPerdidas, setCanasPerdidas] = useState<string>('');
     const [canasColhidas, setCanasColhidas] = useState<string>('');
     const [metrosColhidos, setMetrosColhidos] = useState<string>('');
     const [avaliador, setAvaliador] = useState<string>('');
     const [turno, setTurno] = useState<string>('');
+    const {coordID, porcentagemCanas, setPorcentagemCanas} = useFicha();
+    
   return (
     <div className="w-full flex">
       <form
         className="w-6/12 h-full flex flex-wrap justify-center items-center gap-2 p-4 bg-white/10"
         action={async (formData: FormData) => {
           formData.append("coord_id", JSON.stringify(coordID));
+          formData.append("porcentagemCanas", String(porcentagemCanas))
 
           await CreateFicha(formData);
+
+          setPorcentagemCanas(0);
         }}
       >
         <div className="w-2/5 flex flex-col gap-2">

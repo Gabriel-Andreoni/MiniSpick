@@ -6,10 +6,9 @@ import { FichaForm } from "../FichaForm";
 
 type FichaProps = {
   setFichaOpen: Dispatch<SetStateAction<boolean>>;
-  coordID: undefined | number;
 };
 
-export function Ficha({ setFichaOpen, coordID }: FichaProps) {
+export function Ficha({ setFichaOpen }: FichaProps) {
   return (
     <div className="w-[900px] h-[600px] bg-[#121212] flex rounded-lg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-lg shadow-white/10">
       <Image
@@ -20,7 +19,7 @@ export function Ficha({ setFichaOpen, coordID }: FichaProps) {
         onClick={() => setFichaOpen(false)}
       />
 
-      <FichaForm coordID={coordID} />
+      <FichaForm />
     </div>
   );
 }

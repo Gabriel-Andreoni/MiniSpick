@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Oswald } from "next/font/google";
 import "./globals.css";
-import 'leaflet/dist/leaflet.css';
+import "leaflet/dist/leaflet.css";
+import { FichaProvider } from "./context/FichaContext";
 
 const oswald = Oswald({
   variable: "--font-inter",
@@ -34,7 +35,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${oswald.className} antialiased`}
       >
-        {children}
+        <FichaProvider>{children}</FichaProvider>
       </body>
     </html>
   );

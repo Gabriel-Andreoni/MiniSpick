@@ -10,8 +10,7 @@ export async function CreateFicha(formData: FormData) {
     const avaliador = formData.get("avaliador")
     const turno = formData.get("turno")
     const coords_id = formData.get("coord_id")
-
-    console.log(coords_id);
+    const porcentagemCanas = formData.get("porcentagemCanas");
     
 
     if(typeof metros_colhidos !== 'string') {
@@ -29,6 +28,7 @@ export async function CreateFicha(formData: FormData) {
             avaliador: avaliador,
             turno: turno,
             coords_id: coords_id,
+            porcentagemCanas: Number(porcentagemCanas)
         }
     ])
     .select()

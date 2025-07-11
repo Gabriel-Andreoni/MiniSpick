@@ -6,12 +6,12 @@ import { MapContainer, TileLayer, Polygon } from "react-leaflet";
 
 import { GetCoords } from "@/app/actions/getCoords";
 import { FichasList } from "../FichasList";
+import { useFicha } from "@/app/context/FichaContext";
 
 export default function OpenStreetMap() {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [data, setData] = useState<{ coords: [number, number][]; id: number }[]>([]);
-  // Using undefined |
-  const [coordID, setCoordID] = useState<undefined | number>(undefined)
+  const {setCoordID} = useFicha()
 
   useEffect(() => {
     async function fetchData() {
@@ -57,7 +57,6 @@ export default function OpenStreetMap() {
           <FichasList
           modalOpen={modalOpen}
           setModalOpen={setModalOpen}
-          coordID={coordID}
            />
         )}
       </MapContainer>

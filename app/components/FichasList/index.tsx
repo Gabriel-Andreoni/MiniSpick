@@ -10,10 +10,9 @@ import { Ficha } from "../Ficha";
 type FichaListProps = {
   modalOpen: boolean;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
-  coordID: undefined | number;
 };
 
-export function FichasList({ modalOpen, setModalOpen, coordID }: FichaListProps) {
+export function FichasList({ modalOpen, setModalOpen }: FichaListProps) {
   const [fichaOpen, setFichaOpen] = useState<boolean>(false);
   return (
     <div
@@ -48,7 +47,6 @@ export function FichasList({ modalOpen, setModalOpen, coordID }: FichaListProps)
       {fichaOpen && (
         <Ficha
           setFichaOpen={setFichaOpen}
-          coordID={coordID}
         />
       )
       }

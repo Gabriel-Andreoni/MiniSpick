@@ -10,9 +10,8 @@ export async function CreateFicha(formData: FormData) {
     const avaliador = formData.get("avaliador")
     const turno = formData.get("turno")
     const coords_id = formData.get("coord_id")
-    const porcentagemCanas = formData.get("porcentagemCanas");
+    const porcentagemCanas = parseFloat((formData.get("porcentagemCanas")?.toString() || "0").replace(',', '.'))
     
-
     if(typeof metros_colhidos !== 'string') {
         throw new Error("Campo não pode ser vazio")
     }
@@ -28,7 +27,7 @@ export async function CreateFicha(formData: FormData) {
             avaliador: avaliador,
             turno: turno,
             coords_id: coords_id,
-            porcentagemCanas: Number(porcentagemCanas)
+            porcentagemCanas: porcentagemCanas
         }
     ])
     .select()

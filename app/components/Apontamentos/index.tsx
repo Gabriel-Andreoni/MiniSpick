@@ -1,21 +1,24 @@
 import { GetApontamentos } from "@/app/actions/getApontamentos";
-import { useEffect, useState } from "react";
+import { ApontamentosProps } from "@/app/types/Apontamentos";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-type ApontamentosProps = {
-  id: number;
-  created_at: string;
-  avaliador: string;
-  canas_colhidas: string;
-  canas_perdidas: string;
-  metros_colhidos: number;
-  porcentagemCanas: number;
-  qualidade_solo: string;
-  turno: string;
-  coords_id: number;
+import Image from "next/image";
+
+import CloseIcon from "./img/close-icon.png";
+
+type ApontamentosModalProp = {
+  modalApontamentos: boolean;
+  setModalApontamentos: Dispatch<SetStateAction<boolean>>;
 };
 
-export function Apontamentos() {
+export function Apontamentos({
+  modalApontamentos,
+  setModalApontamentos,
+}: ApontamentosModalProp) {
   const [apontamentos, setApontamentos] = useState<ApontamentosProps[]>([]);
+  const [apontamentoAbertoID, setApontamentoAbertoID] = useState<number | null>(
+    null
+  );
 
   useEffect(() => {
     async function getApontamentos() {
@@ -27,8 +30,6 @@ export function Apontamentos() {
   }, []);
 
   function FormartarData({ dataRAW }: { dataRAW: string }) {
-    console.log("dataRAW recebida", dataRAW);
-
     if (typeof dataRAW !== "string" || !dataRAW.trim())
       return <span>Data não disponível</span>;
 
@@ -39,21 +40,83 @@ export function Apontamentos() {
     const horas = data.getHours().toString().padStart(2, "0");
     const minutos = data.getMinutes().toString().padStart(2, "0");
 
-    const formattedData = `${data.toLocaleDateString(
-      "pt-BR"
-    )} ${horas}${horas.length > 10 ? 'hr' : 'hrs'} : ${minutos}min`;
+    const formattedData = `${data.toLocaleDateString("pt-BR")} ${horas}${
+      horas.length > 10 ? "hr" : "hrs"
+    } : ${minutos}min`;
 
     return <span>{formattedData}</span>;
   }
 
   return (
-    <ul className="w-full">
-      {apontamentos.map((apontamento, index) => {
+    <ul
+      className={`w-full h-full pt-20 flex flex-col relative overflow-hidden ${
+        apontamentoAbertoID ? "overflow-y-scroll" : ""
+      }`}
+    >
+      <Image
+        onClick={() => setModalApontamentos((prevState) => !prevState)}
+        className={`${modalApontamentos ? "visible" : "hidden"} ${
+          apontamentoAbertoID ? "hidden" : ""
+        } w-10 h-10 absolute top-4 right-4 z-99999 cursor-pointer`}
+        src={CloseIcon}
+        alt="ícone de fechar"
+      />
+      {apontamentos.map((apontamento) => {
+        const isAberto = apontamento.id === apontamentoAbertoID;
+
         return (
           <li
-          className="bg-white/10 p-6 text-white cursor-pointer transition-all hover:bg-white/20"
-          key={index}>
+            onClick={() =>
+              setApontamentoAbertoID(isAberto ? null : apontamento.id)
+            }
+            className={`${isAberto ? "h-auto pt-20 bg-white/20" : ""}
+        bg-white/10 p-6 flex flex-col gap-4 text-white cursor-pointer
+        transition-all hover:bg-white/20 relative`}
+            key={apontamento.id}
+          >
+            <Image
+              className={`${
+                isAberto ? "w-10 h-10 visible absolute top-4 right-4" : "hidden"
+              }`}
+              src={CloseIcon}
+              alt="ícone de fechar"
+            />
+
             <FormartarData dataRAW={apontamento.created_at} />
+
+            {isAberto && (
+              <>
+                <div className="w-full flex flex-col">
+                  <span>Porcentagem de Canas Perdidas</span>
+                  <h2>{apontamento.porcentagemCanas}%</h2>
+                </div>
+
+                <div className="w-full flex flex-col">
+                  <span>Canas Colhidas</span>
+                  <h2>{apontamento.canas_colhidas}</h2>
+                </div>
+
+                <div className="w-full flex flex-col">
+                  <span>Canas Perdidas</span>
+                  <h2>{apontamento.canas_perdidas}</h2>
+                </div>
+
+                <div className="w-full flex flex-col">
+                  <span>Avaliador</span>
+                  <h2>{apontamento.avaliador}</h2>
+                </div>
+
+                <div className="w-full flex flex-col">
+                  <span>Turno</span>
+                  <h2>{apontamento.turno}</h2>
+                </div>
+
+                <div className="w-full flex flex-col">
+                  <span>Talhão</span>
+                  <h2>{apontamento.coords_id}</h2>
+                </div>
+              </>
+            )}
           </li>
         );
       })}

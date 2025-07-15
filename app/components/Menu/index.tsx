@@ -6,6 +6,7 @@ import Image from "next/image";
 
 import BackIcon from "./img/back.png";
 import NextIcon from "./img/next.png";
+
 import { CoordsForm } from "../CoordsForm";
 import { Apontamentos } from "../Apontamentos";
 
@@ -24,14 +25,14 @@ export function Menu() {
           <Image
             src={NextIcon}
             alt="Voltar"
-            className="w-10 h-10 absolute top-4 left-4 cursor-pointer"
+            className="w-10 h-10 absolute top-4 left-4 cursor-pointer z-9999"
             onClick={() => setMenuOpen((prevState) => !prevState)}
           />
 
           {coordsFormOpen ? (
             <CoordsForm setCoordsFormOpen={setCoordsFormOpen} />
-          ) : apontamentos? (
-            <Apontamentos />
+          ) : apontamentos ? (
+            <Apontamentos modalApontamentos={apontamentos} setModalApontamentos={setApontamentos}/>
           ) : (
             <>
               <div

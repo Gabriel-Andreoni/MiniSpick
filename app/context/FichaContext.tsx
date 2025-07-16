@@ -1,6 +1,7 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { useAuth } from "@clerk/nextjs";
+import { createContext, use, useContext, useState } from "react";
 
 type FichaContextType = {
   canasColhidas?: string;
@@ -17,11 +18,13 @@ type FichaContextType = {
   setPorcentagemCanas: (v: number) => void;
   coordID: undefined | number;
   setCoordID: (v: undefined | number) => void;
+  userID: string | null | undefined;
 };
 
 const FichaContext = createContext({} as FichaContextType);
 
 export function FichaProvider({ children }: { children: React.ReactNode }) {
+  const {userId} = useAuth();
   const [canasColhidas, setCanasColhidas] = useState("");
   const [canasPerdidas, setCanasPerdidas] = useState("");
   const [metrosColhidos, setMetrosColhidos] = useState("");
@@ -29,6 +32,7 @@ export function FichaProvider({ children }: { children: React.ReactNode }) {
   const [turno, setTurno] = useState("");
   const [porcentagemCanas, setPorcentagemCanas] = useState<number>(0);
   const [coordID, setCoordID] = useState<undefined | number>();
+  const [userID, setUserID] = useState<string | null | undefined>(userId)
 
   return (
     <FichaContext.Provider
@@ -46,7 +50,8 @@ export function FichaProvider({ children }: { children: React.ReactNode }) {
         porcentagemCanas,
         setPorcentagemCanas,
         coordID,
-        setCoordID
+        setCoordID,
+        userID,
       }}
     >
       {children}

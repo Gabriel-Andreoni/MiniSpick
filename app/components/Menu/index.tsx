@@ -32,7 +32,10 @@ export function Menu() {
           {coordsFormOpen ? (
             <CoordsForm setCoordsFormOpen={setCoordsFormOpen} />
           ) : apontamentos ? (
-            <Apontamentos modalApontamentos={apontamentos} setModalApontamentos={setApontamentos}/>
+            <Apontamentos
+              modalApontamentos={apontamentos}
+              setModalApontamentos={setApontamentos}
+            />
           ) : (
             <>
               <div

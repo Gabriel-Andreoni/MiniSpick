@@ -4,6 +4,8 @@ import { Oswald } from "next/font/google";
 import "./globals.css";
 import "leaflet/dist/leaflet.css";
 import { FichaProvider } from "./context/FichaContext";
+import { ClerkProvider} from "@clerk/nextjs";
+import { neobrutalism } from "@clerk/themes";
 
 const oswald = Oswald({
   variable: "--font-inter",
@@ -31,12 +33,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${oswald.className} antialiased`}
-      >
-        <FichaProvider>{children}</FichaProvider>
-      </body>
-    </html>
+    <ClerkProvider
+      appearance={{
+        cssLayerName: 'clerk',
+        baseTheme: neobrutalism
+      }}
+    >
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} ${oswald.className} antialiased`}
+        >
+          <FichaProvider>{children}</FichaProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

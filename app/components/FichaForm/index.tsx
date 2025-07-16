@@ -10,7 +10,7 @@ export function FichaForm() {
     const [metrosColhidos, setMetrosColhidos] = useState<string>('');
     const [avaliador, setAvaliador] = useState<string>('');
     const [turno, setTurno] = useState<string>('');
-    const {coordID, porcentagemCanas, setPorcentagemCanas} = useFicha();
+    const {userID, coordID, porcentagemCanas, setPorcentagemCanas} = useFicha();
     
   return (
     <div className="w-full flex">
@@ -19,6 +19,7 @@ export function FichaForm() {
         action={async (formData: FormData) => {
           formData.append("coord_id", JSON.stringify(coordID));
           formData.append("porcentagemCanas", String(porcentagemCanas))
+          formData.append("userID", String(userID))
 
           await CreateFicha(formData);
 

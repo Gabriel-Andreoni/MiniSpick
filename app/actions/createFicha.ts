@@ -1,6 +1,7 @@
 "use server"
 
 import { supabase } from "../lib/supabase";
+import {auth} from "@clerk/nextjs/server"
 
 export async function CreateFicha(formData: FormData) {
     const qnt_canas = formData.get('qnt-cana')
@@ -11,6 +12,7 @@ export async function CreateFicha(formData: FormData) {
     const turno = formData.get("turno")
     const coords_id = formData.get("coord_id")
     const porcentagemCanas = parseFloat((formData.get("porcentagemCanas")?.toString() || "0").replace(',', '.'))
+    const {userId} = await auth();
     
     if(typeof metros_colhidos !== 'string') {
         throw new Error("Campo não pode ser vazio")
@@ -27,7 +29,8 @@ export async function CreateFicha(formData: FormData) {
             avaliador: avaliador,
             turno: turno,
             coords_id: coords_id,
-            porcentagemCanas: porcentagemCanas
+            porcentagemCanas: porcentagemCanas,
+            userID: userId
         }
     ])
     .select()

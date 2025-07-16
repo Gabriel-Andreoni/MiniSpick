@@ -40,7 +40,7 @@ export function FichasList({ modalOpen, setModalOpen }: FichaListProps) {
             width={48}
             height={48}
           />
-          <h4 className="font-bold text-white">Cana de Açucar</h4>
+          <h4 className="font-bold text-white">Colheita</h4>
         </div>
       </div>
 

@@ -63,15 +63,19 @@ export default function OpenStreetMap() {
     <div className="w-full h-full  rounded-lg relative shadow-lg shadow-white/4">
       <div className="absolute top-4 right-30 z-[99999]">
         <UserButton
-          appearance={{
-            elements: {
-              userButtonAvatarBox: {
-                width: "50px",
-                height: "50px",
+          appearance={
+            {
+              elements: {
+                userButtonAvatarBox: {
+                  width: "50px",
+                  height: "50px",
+                }
               },
-            },
-          }}
+            }
+          }
         />
+      </div>
+      <div className="absolute top-4 right-30 z-[99999]">
       </div>
       <div
         onMouseEnter={() => setSelectFazenda((prevState) => !prevState)}

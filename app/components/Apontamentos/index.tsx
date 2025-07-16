@@ -57,7 +57,7 @@ export function Apontamentos({
         onClick={() => setModalApontamentos((prevState) => !prevState)}
         className={`${modalApontamentos ? "visible" : "hidden"} ${
           apontamentoAbertoID ? "hidden" : ""
-        } w-10 h-10 absolute top-4 right-4 z-99999 cursor-pointer`}
+        } w-10 h-10 absolute top-4 right-4 cursor-pointer`}
         src={CloseIcon}
         alt="ícone de fechar"
       />

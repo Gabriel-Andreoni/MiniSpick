@@ -24,7 +24,7 @@ export function Statistics({
     const metros = Number(metrosColhidos);
 
     if(!isNaN(colhidas) && !isNaN(perdidas) && metros > 0) {
-      const resultado = ((colhidas + perdidas) / metros) * 100;
+      const resultado = ((colhidas + perdidas) / metros) * 0.1;
       setPorcentagemCanas?.(Number(resultado.toFixed(2)));
     }
   },[canasColhidas, canasPerdidas, metrosColhidos, setPorcentagemCanas]);
